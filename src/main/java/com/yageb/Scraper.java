@@ -69,28 +69,16 @@ public class Scraper implements IScraper {
     @Override
     public Iterable<String> getImageSrcs(Document document) {
         ArrayList<String> imageSrcs = new ArrayList<String>();
-        // Get all elements with img tag ,
-        Elements img = document.getElementsByTag("img");
+        Elements images = document.getElementsByTag("img");
 
-        for (Element el : img) {
-
-            // for each element get the srs url
-            String src = el.absUrl("src");
-
-            System.out.println("Image Found!");
-            System.out.println("src attribute is : " + src);
-
-            // Exctract the name of the image from the src attribute
-            int indexname = src.lastIndexOf("/");
-
-            if (indexname == src.length()) {
-                src = src.substring(1, indexname);
+        for (Element imageElement : images) {
+            String src = imageElement.absUrl("src");
+            int indexName = src.lastIndexOf("/");
+            if (indexName == src.length()) {
+                src = src.substring(1, indexName);
             }
 
-            indexname = src.lastIndexOf("/");
-            String name = src.substring(indexname, src.length());
-
-            System.out.println(name);
+            indexName = src.lastIndexOf("/");
             imageSrcs.add(src);
         }
 
