@@ -6,7 +6,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class ScraperController {
+public class ScraperController implements Runnable {
     private IScraper scraper;
     private IFileManager fileManager;
 
@@ -28,23 +28,18 @@ public class ScraperController {
         System.out.println(document.title());
         fileManager.saveText(new Resource(document.outerHtml(), scraper.getFilePath(url)));
 
-        Iterable<Resource> scripts = scraper.getScripts(document);
-        for (Resource script : scripts) {
-            fileManager.saveText(script);
-        }
+        Thread scriptThread = new Thread(new ScriptScraper(scraper, document, fileManager));
+        scriptThread.start();
 
-        Iterable<Resource> stylesheets = scraper.getStylesheets(document);
-        for (Resource stylesheet : stylesheets) {
-            fileManager.saveText(stylesheet);
-        }
+        Thread stylesheetThread = new Thread(new StylesheetScraper(scraper, document, fileManager));
+        stylesheetThread.start();
 
-        Iterable<String> imageSrcs = scraper.getImageSrcs(document);
-        for (String imageSrc : imageSrcs) {
-            fileManager.saveImage(imageSrc, scraper.getRootUrl());
-        }
+        Thread imageThread = new Thread(new ImageScraper(scraper, document, fileManager));
+        imageThread.start();
 
         Elements links = document.select("a");
         for (Element link : links) {
+            // create a thread for each link
             String nextUrl = link.attr("abs:href");
             System.out.println(nextUrl);
             Document linkDocument = scraper.getLinkDocument(link);

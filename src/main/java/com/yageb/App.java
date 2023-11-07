@@ -7,7 +7,8 @@ public final class App {
     public static void main(String[] args) {
         try {
             ScraperController controller = new ScraperController(new Scraper(), new FileManager());
-            controller.run();
+            Thread thread = new Thread(controller);
+            thread.start();
         } catch (Exception e) {
             System.err.println(e);
         }
