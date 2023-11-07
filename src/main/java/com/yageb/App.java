@@ -1,11 +1,11 @@
 package com.yageb;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
-import java.net.HttpURLConnection;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.*;
-
 import org.apache.commons.io.FileUtils;
 import org.jsoup.*;
 import org.jsoup.Connection.Response;
@@ -33,17 +33,16 @@ public final class App {
             final Response response = Jsoup.connect(baseUrl).execute();
             doc = response.parse();
 
-            Elements scripts = doc.getElementsByTag("script");
             Elements css = doc.getElementsByTag("link");
-            for(Element c : css) {
+            for (Element c : css) {
                 String url = c.absUrl("href");
                 String rel = c.attr("rel") == null ? "" : c.attr("rel");
-                if(!url.isEmpty() && rel.equals("stylesheet")) {
+                if (!url.isEmpty() && rel.equals("stylesheet")) {
                     String filePath = url.split(baseUrl)[1];
                     Document docScript = Jsoup
-                                            .connect(url) // add user agent
-                                            .ignoreContentType(true)
-                                            .get();
+                            .connect(url) // add user agent
+                            .ignoreContentType(true)
+                            .get();
 
                     String data = docScript.select("body").text();
                     final File file = new File("data/" + filePath);
@@ -51,15 +50,45 @@ public final class App {
                 }
             }
 
-            // get js files
+            // Get all elements with img tag ,
+            Elements img = doc.getElementsByTag("img");
 
-            // get images
-            // Elements imgElements = doc.select("img[src]");
-            // for (Element imgElement : imgElements) {
-            //     String imgUrlString = imgElement.attr("abs:src");
-            //     URL imgURL = new URL(imgUrlString);
-            //     HttpURLConnection httpConnection = (HttpURLConnection) imgURL.openConnection();
-            // }
+            for (Element el : img) {
+
+                // for each element get the srs url
+                String src = el.absUrl("src");
+
+                System.out.println("Image Found!");
+                System.out.println("src attribute is : " + src);
+
+                // Exctract the name of the image from the src attribute
+                int indexname = src.lastIndexOf("/");
+
+                if (indexname == src.length()) {
+                    src = src.substring(1, indexname);
+                }
+
+                indexname = src.lastIndexOf("/");
+                String name = src.substring(indexname, src.length());
+
+                System.out.println(name);
+
+                URL url = new URL(src);
+                InputStream in = url.openStream();
+
+                String filePath = src.split(baseUrl)[1];
+                System.out.println("filePath");
+                System.out.println(filePath);
+                OutputStream out = new BufferedOutputStream(FileUtils.openOutputStream(new File("data/" + filePath)));
+
+                for (int b; (b = in.read()) != -1;) {
+                    out.write(b);
+                }
+                out.close();
+                in.close();
+
+            }
+
             final File file = new File("data/index.html");
             FileUtils.writeStringToFile(file, doc.outerHtml(), StandardCharsets.UTF_8);
         } catch (Exception e) {
