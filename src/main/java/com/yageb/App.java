@@ -1,12 +1,5 @@
 package com.yageb;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import org.apache.commons.io.FileUtils;
 import org.jsoup.nodes.*;
 
 /**
@@ -22,44 +15,28 @@ public final class App {
      * @param args The arguments of the program.
      */
     public static void main(String[] args) {
-        IScraper resourceManager = new Scraper();
+        IScraper scraper = new Scraper();
+        IFileManager fileManager = new FileManager();
 
         try {
-            Document document = resourceManager.connect();
-            Iterable<Resource> scripts = resourceManager.getScripts(document);
+            Document document = scraper.connect();
+            Iterable<Resource> scripts = scraper.getScripts(document);
             for (Resource script : scripts) {
-                // add file manager
-                final File file = new File("data/" + script.getFilePath());
-                FileUtils.writeStringToFile(file, script.getData());
+                fileManager.saveText(script);
             }
 
-            Iterable<Resource> stylesheets = resourceManager.getStylesheets(document);
+            Iterable<Resource> stylesheets = scraper.getStylesheets(document);
             for (Resource stylesheet : stylesheets) {
-                // add file manager
-                final File file = new File("data/" + stylesheet.getFilePath());
-                FileUtils.writeStringToFile(file, stylesheet.getData());
+                fileManager.saveText(stylesheet);
             }
 
 
-            Iterable<String> imageSrcs = resourceManager.getImageSrcs(document);
+            Iterable<String> imageSrcs = scraper.getImageSrcs(document);
             for (String imageSrc : imageSrcs) {
-                URL url = new URL(imageSrc);
-                InputStream in = url.openStream();
-
-                String filePath = imageSrc.split(resourceManager.getBaseUrl())[1];
-                System.out.println("filePath");
-                System.out.println(filePath);
-                OutputStream out = new BufferedOutputStream(FileUtils.openOutputStream(new File("data/" + filePath)));
-
-                for (int b; (b = in.read()) != -1;) {
-                    out.write(b);
-                }
-                out.close();
-                in.close();
+                fileManager.saveImage(imageSrc, scraper.getBaseUrl());
             }
 
-            final File file = new File("data/index.html");
-            FileUtils.writeStringToFile(file, document.outerHtml(), StandardCharsets.UTF_8);
+            fileManager.saveText(new Resource(document.outerHtml(), "index.html"));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
