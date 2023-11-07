@@ -24,6 +24,11 @@ public final class BookScraper {
                 fileManager.saveImage(imageSrc, scraper.getBaseUrl());
             }
 
+            Iterable<Resource> links = scraper.scrapeLinks();
+            for (Resource link : links) {
+                fileManager.saveText(link);
+            }
+
             fileManager.saveText(new Resource(scraper.getOuterHtml(), "index.html"));
         } catch (Exception e) {
             throw new RuntimeException(e);

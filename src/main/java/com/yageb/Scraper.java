@@ -38,7 +38,7 @@ public class Scraper implements IScraper {
             if (!url.isEmpty() && rel.equals("stylesheet")) {
                 String filePath = url.split(baseUrl)[1];
                 Document docScript = Jsoup
-                        .connect(url) // add user agent
+                        .connect(url) // todo: add user agent
                         .ignoreContentType(true)
                         .get();
 
@@ -91,7 +91,28 @@ public class Scraper implements IScraper {
         return imageSrcs;
     }
 
+    @Override
     public String getOuterHtml() {
         return document.outerHtml();
+    }
+
+    @Override
+    public Iterable<Resource> scrapeLinks() throws IOException {
+        ArrayList<Resource> resources = new ArrayList<Resource>();
+        Elements links = document.select("a");
+        for (Element link : links) {
+            String nextUrl = link.attr("abs:href");
+            String filePath = nextUrl.split(baseUrl)[1];
+            Document docScript = Jsoup
+                    .connect(nextUrl) // todo: add user agent
+                    .ignoreContentType(true)
+                    .get();
+                    // check for links in the child document as well, recursively
+            // get images as well
+            System.out.println(docScript.title());
+            Resource resource = new Resource(docScript.outerHtml(), filePath);
+            resources.add(resource);
+        }
+        return resources;
     }
 }

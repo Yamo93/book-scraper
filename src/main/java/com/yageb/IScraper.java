@@ -16,4 +16,6 @@ public interface IScraper {
     public String getBaseUrl();
 
     public String getOuterHtml();
+
+    public Iterable<Resource> scrapeLinks() throws IOException;
 }
