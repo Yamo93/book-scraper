@@ -11,14 +11,14 @@ import org.jsoup.select.Elements;
 
 public class Scraper implements IScraper {
     private final String baseUrl = "http://books.toscrape.com/";
-    private Document document;
+    private Document rootDocument;
 
     public String getBaseUrl() {
         return baseUrl;
     }
 
     public Scraper() throws IOException {
-        this.document = this.connect();
+        this.rootDocument = this.connect();
     }
 
     @Override
@@ -31,7 +31,7 @@ public class Scraper implements IScraper {
     @Override
     public Iterable<Resource> getStylesheets() throws IOException {
         ArrayList<Resource> resources = new ArrayList<Resource>();
-        Elements css = document.getElementsByTag("link");
+        Elements css = rootDocument.getElementsByTag("link");
         for (Element c : css) {
             String url = c.absUrl("href");
             String rel = c.attr("rel") == null ? "" : c.attr("rel");
@@ -54,7 +54,7 @@ public class Scraper implements IScraper {
     @Override
     public Iterable<Resource> getScripts() throws IOException {
         ArrayList<Resource> resources = new ArrayList<Resource>();
-        Elements scripts = document.getElementsByTag("script");
+        Elements scripts = rootDocument.getElementsByTag("script");
         for (Element s : scripts) {
             String url = s.absUrl("src");
             if (!url.isEmpty() && url.contains(baseUrl)) {
@@ -75,7 +75,7 @@ public class Scraper implements IScraper {
     @Override
     public Iterable<String> getImageSrcs() {
         ArrayList<String> imageSrcs = new ArrayList<String>();
-        Elements images = document.getElementsByTag("img");
+        Elements images = rootDocument.getElementsByTag("img");
 
         for (Element imageElement : images) {
             String src = imageElement.absUrl("src");
@@ -93,13 +93,13 @@ public class Scraper implements IScraper {
 
     @Override
     public String getOuterHtml() {
-        return document.outerHtml();
+        return rootDocument.outerHtml();
     }
 
     @Override
     public Iterable<Resource> scrapeLinks() throws IOException {
         ArrayList<Resource> resources = new ArrayList<Resource>();
-        Elements links = document.select("a");
+        Elements links = rootDocument.select("a");
         for (Element link : links) {
             String nextUrl = link.attr("abs:href");
             String filePath = nextUrl.split(baseUrl)[1];
@@ -109,7 +109,6 @@ public class Scraper implements IScraper {
                     .get();
                     // check for links in the child document as well, recursively
             // get images as well
-            System.out.println(docScript.title());
             Resource resource = new Resource(docScript.outerHtml(), filePath);
             resources.add(resource);
         }
