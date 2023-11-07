@@ -11,8 +11,14 @@ import org.jsoup.select.Elements;
 
 public class Scraper implements IScraper {
     private final String baseUrl = "http://books.toscrape.com/";
+    private Document document;
+
     public String getBaseUrl() {
         return baseUrl;
+    }
+
+    public Scraper() throws IOException {
+        this.document = this.connect();
     }
 
     @Override
@@ -23,7 +29,7 @@ public class Scraper implements IScraper {
     }
 
     @Override
-    public Iterable<Resource> getStylesheets(Document document) throws IOException {
+    public Iterable<Resource> getStylesheets() throws IOException {
         ArrayList<Resource> resources = new ArrayList<Resource>();
         Elements css = document.getElementsByTag("link");
         for (Element c : css) {
@@ -46,7 +52,7 @@ public class Scraper implements IScraper {
     }
 
     @Override
-    public Iterable<Resource> getScripts(Document document) throws IOException {
+    public Iterable<Resource> getScripts() throws IOException {
         ArrayList<Resource> resources = new ArrayList<Resource>();
         Elements scripts = document.getElementsByTag("script");
         for (Element s : scripts) {
@@ -67,7 +73,7 @@ public class Scraper implements IScraper {
     }
 
     @Override
-    public Iterable<String> getImageSrcs(Document document) {
+    public Iterable<String> getImageSrcs() {
         ArrayList<String> imageSrcs = new ArrayList<String>();
         Elements images = document.getElementsByTag("img");
 
@@ -85,4 +91,7 @@ public class Scraper implements IScraper {
         return imageSrcs;
     }
 
+    public String getOuterHtml() {
+        return document.outerHtml();
+    }
 }

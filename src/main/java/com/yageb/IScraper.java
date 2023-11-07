@@ -7,11 +7,13 @@ import org.jsoup.nodes.Document;
 public interface IScraper {
     public Document connect() throws IOException;
 
-    public Iterable<Resource> getStylesheets(Document document) throws IOException;
+    public Iterable<Resource> getStylesheets() throws IOException;
 
-    public Iterable<Resource> getScripts(Document document) throws IOException;
+    public Iterable<Resource> getScripts() throws IOException;
 
-    public Iterable<String> getImageSrcs(Document document);
+    public Iterable<String> getImageSrcs();
 
     public String getBaseUrl();
+
+    public String getOuterHtml();
 }
