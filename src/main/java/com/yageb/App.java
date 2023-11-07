@@ -33,6 +33,23 @@ public final class App {
             final Response response = Jsoup.connect(baseUrl).execute();
             doc = response.parse();
 
+            Elements scripts = doc.getElementsByTag("script");
+            for(Element s : scripts) {
+                String url = s.absUrl("src");
+                if(!url.isEmpty() && url.contains(baseUrl)) {
+                    System.out.println(url);
+                    String filePath = url.split(baseUrl)[1];
+                    Document docScript = Jsoup
+                                            .connect(url)
+                                            .ignoreContentType(true)
+                                            .get();
+
+                    String data = docScript.select("body").text();
+                    final File file = new File("data/" + filePath);
+                    FileUtils.writeStringToFile(file, data.toString());
+                }
+            }
+
             Elements css = doc.getElementsByTag("link");
             for (Element c : css) {
                 String url = c.absUrl("href");
