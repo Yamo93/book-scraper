@@ -19,7 +19,6 @@ public final class BookScraper {
                 fileManager.saveText(stylesheet);
             }
 
-
             Iterable<String> imageSrcs = scraper.getImageSrcs();
             for (String imageSrc : imageSrcs) {
                 fileManager.saveImage(imageSrc, scraper.getBaseUrl());
