@@ -69,7 +69,6 @@ public class Scraper implements IScraper {
                 String filePath = url.split(baseUrl)[1];
                 Document docScript = connect(url);
                 if (docScript != null) {
-                    scrapedPages.add(url);
                     String data = docScript.select("body").text();
                     Resource resource = new Resource(data, filePath);
                     resources.add(resource);
