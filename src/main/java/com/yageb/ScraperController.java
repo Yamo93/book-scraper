@@ -39,7 +39,6 @@ public class ScraperController implements Runnable {
 
         Elements links = document.select("a");
         for (Element link : links) {
-            // create a thread for each link
             String nextUrl = link.attr("abs:href");
             System.out.println(nextUrl);
             Document linkDocument = scraper.getLinkDocument(link);
