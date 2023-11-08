@@ -2,8 +2,11 @@ package com.yageb;
 
 import java.io.IOException;
 
+/**
+ * Interface for the file manager.
+ */
 public interface IFileManager {
-    public void saveText(Resource resource) throws IOException;
+    void saveText(Resource resource) throws IOException;
 
-    public void saveImage(String src, String baseUrl) throws IOException;
+    void saveImage(String src, String baseUrl) throws IOException;
 }

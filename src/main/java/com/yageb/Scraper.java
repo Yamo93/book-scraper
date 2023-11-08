@@ -3,24 +3,27 @@ package com.yageb;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
-
+import java.util.Set;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+/**
+ * Scrapes resources from web pages.
+ */
 public class Scraper implements IScraper {
     private final String baseUrl = "http://books.toscrape.com/";
     private Document rootDocument;
-    private HashSet<String> scrapedPages;
-
-    public String getRootUrl() {
-        return baseUrl;
-    }
+    private Set<String> scrapedPages;
 
     public Scraper() throws IOException {
         this.scrapedPages = new HashSet<String>();
         this.rootDocument = this.connect(baseUrl);
+    }
+
+    public String getRootUrl() {
+        return baseUrl;
     }
 
     @Override
@@ -42,7 +45,7 @@ public class Scraper implements IScraper {
         for (Element c : css) {
             String url = c.absUrl("href");
             String rel = c.attr("rel") == null ? "" : c.attr("rel");
-            if (!url.isEmpty() && rel.equals("stylesheet")) {
+            if ("stylesheet".equals(rel) && !url.isEmpty()) {
                 String filePath = url.split(baseUrl)[1];
                 Document docScript = connect(url);
                 if (docScript != null) {
@@ -105,6 +108,9 @@ public class Scraper implements IScraper {
         return rootDocument;
     }
 
+    /**
+     * Gets the document of a link.
+     */
     public Document getLinkDocument(Element link) throws IOException {
         String nextUrl = link.attr("abs:href");
         Document childDocument = connect(nextUrl);

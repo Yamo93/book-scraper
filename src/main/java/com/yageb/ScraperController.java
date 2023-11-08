@@ -1,26 +1,36 @@
 package com.yageb;
 
 import java.io.IOException;
-
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+/**
+ * A controller for scraping web pages in threads and saving them to disk.
+ */
 public class ScraperController implements Runnable {
     private IScraper scraper;
     private IFileManager fileManager;
 
+    /**
+     * Constructs a scraper controller.
+     * @param scraper The scraper.
+     * @param fileManager The file manager.
+     */
     public ScraperController(IScraper scraper,
             IFileManager fileManager) {
         this.scraper = scraper;
         this.fileManager = fileManager;
     }
 
+    /**
+     * Runs the scraping recursively starting from root.
+     */
     public void run() {
         try {
             scrape(scraper.getRootDocument(), "http://books.toscrape.com/index.html");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

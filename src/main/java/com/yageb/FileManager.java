@@ -7,11 +7,12 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-
 import org.apache.commons.io.FileUtils;
 
+/**
+ * Saves files to disk.
+ */
 public class FileManager implements IFileManager {
-
     @Override
     public void saveText(Resource resource) throws IOException {
         final File file = new File("data/" + resource.getFilePath());
