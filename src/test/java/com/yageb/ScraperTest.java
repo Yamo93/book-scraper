@@ -84,6 +84,17 @@ public class ScraperTest {
     }
 
     @Test
+    void testGetLinkDocument() throws IOException {
+        IHtmlParser parser = new MockParser();
+        Scraper scraper = new Scraper(parser);
+        IElement link = new LinkElement("http://books.toscrape.com/dogs.html");
+        IDocument document1 = scraper.getLinkDocument(link);
+        assertNotNull(document1);
+        IDocument document2 = scraper.getLinkDocument(link);
+        assertNull(document2);
+    }
+
+    @Test
     public void testFilePath() throws IOException {
         IHtmlParser parser = new MockParser();
         Scraper scraper = new Scraper(parser);
