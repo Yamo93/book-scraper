@@ -67,6 +67,23 @@ public class ScraperTest {
     }
 
     @Test
+    void testGetImageSrcs() throws IOException {
+        IHtmlParser parser = new MockParser();
+        Scraper scraper = new Scraper(parser);
+        IDocument htmlWithImgDocument = new MockHtmlWithImgDocument();
+        Iterable<String> imageSrcs = scraper.getImageSrcs(htmlWithImgDocument);
+        int count = 0;
+        String srcs = "";
+
+        for (String imageSrc : imageSrcs) {
+            count += 1;
+            srcs += imageSrc;
+        }
+        assertEquals(1, count);
+        assertTrue(srcs.contains("cats.jpg"));
+    }
+
+    @Test
     public void testFilePath() throws IOException {
         IHtmlParser parser = new MockParser();
         Scraper scraper = new Scraper(parser);
