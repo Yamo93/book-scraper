@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * A mock implementation of Document.
  */
-public class MockDocument implements IDocument {
+public class MockStylesheetDocument implements IDocument {
     @Override
     public String outerHtml() {
         return "<body>{ .color: red; }</body>";

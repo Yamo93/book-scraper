@@ -34,7 +34,7 @@ public class ScraperTest {
     void testGetStylesheets() throws IOException {
         IHtmlParser parser = new MockParser();
         Scraper scraper = new Scraper(parser);
-        IDocument stylesheetDocument = new MockDocument();
+        IDocument stylesheetDocument = new MockStylesheetDocument();
         Iterable<Resource> stylesheets = scraper.getStylesheets(stylesheetDocument);
         int count = 0;
         String data = "";
@@ -46,6 +46,24 @@ public class ScraperTest {
         assertEquals(1, count);
         assertTrue(data.contains("body"));
         assertTrue(data.contains("red"));
+    }
+
+    @Test
+    void testGetScripts() throws IOException {
+        IHtmlParser parser = new MockParser();
+        Scraper scraper = new Scraper(parser);
+        IDocument scriptDocument = new MockScriptDocument();
+        Iterable<Resource> scripts = scraper.getScripts(scriptDocument);
+        int count = 0;
+        String data = "";
+
+        for (Resource script : scripts) {
+            count += 1;
+            data += script.getData();
+        }
+        assertEquals(1, count);
+        assertTrue(data.contains("console.log"));
+        assertTrue(data.contains("hello world"));
     }
 
     @Test
