@@ -1,5 +1,8 @@
 package com.yageb;
 
+/**
+ * A stylesheet element.
+ */
 public class StylesheetElement implements IElement {
     private String href;
 
@@ -14,8 +17,9 @@ public class StylesheetElement implements IElement {
 
     @Override
     public String attr(String attrName) {
-        if (attrName == "rel") return "stylesheet";
+        if ("rel".equals(attrName)) {
+            return "stylesheet";
+        }
         return null;
     }
-    
 }

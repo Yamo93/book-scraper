@@ -19,7 +19,7 @@ public class MockDocument implements IDocument {
     @Override
     public Iterable<IElement> getElementsByTag(String tag) {
         ArrayList<IElement> elements = new ArrayList<IElement>();
-        if (tag == "link") {
+        if ("link".equals(tag)) {
             elements.add(new StylesheetElement("http://books.toscrape.com/cats.css"));
         }
         return elements;
