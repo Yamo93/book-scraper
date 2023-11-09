@@ -1,9 +1,6 @@
 package com.yageb;
 
 import java.io.IOException;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 /**
  * A controller for scraping web pages in threads and saving them to disk.
@@ -34,7 +31,7 @@ public class ScraperController implements Runnable {
         }
     }
 
-    private void scrape(Document document, String url) throws IOException {
+    private void scrape(IDocument document, String url) throws IOException {
         System.out.println(document.title());
         fileManager.saveText(new Resource(document.outerHtml(), scraper.getFilePath(url)));
 
@@ -47,11 +44,11 @@ public class ScraperController implements Runnable {
         Thread imageThread = new Thread(new ImageScraper(scraper, document, fileManager));
         imageThread.start();
 
-        Elements links = document.select("a");
-        for (Element link : links) {
+        Iterable<IElement> links = document.getElementsByTag("a");
+        for (IElement link : links) {
             String nextUrl = link.attr("abs:href");
             System.out.println(nextUrl);
-            Document linkDocument = scraper.getLinkDocument(link);
+            IDocument linkDocument = scraper.getLinkDocument(link);
             if (linkDocument != null) {
                 Resource resource = new Resource(linkDocument.outerHtml(), scraper.getFilePath(nextUrl));
                 fileManager.saveText(resource);

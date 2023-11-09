@@ -1,14 +1,13 @@
 package com.yageb;
 
 import java.io.IOException;
-import org.jsoup.nodes.Document;
 
 /**
  * Scrapes images.
  */
 public class ImageScraper implements Runnable {
     private IScraper scraper;
-    private Document document;
+    private IDocument document;
     private IFileManager fileManager;
 
     /**
@@ -17,7 +16,7 @@ public class ImageScraper implements Runnable {
      * @param document The document to scrape.
      * @param fileManager A file manager.
      */
-    public ImageScraper(IScraper scraper, Document document, IFileManager fileManager) {
+    public ImageScraper(IScraper scraper, IDocument document, IFileManager fileManager) {
         this.scraper = scraper;
         this.document = document;
         this.fileManager = fileManager;

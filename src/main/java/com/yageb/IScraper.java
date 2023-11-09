@@ -1,28 +1,24 @@
 package com.yageb;
 
 import java.io.IOException;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 
 /**
  * Interface for the scraper.
  */
 public interface IScraper {
-    Document connect(String url) throws IOException;
+    IDocument parse(String url) throws IOException;
 
-    Iterable<Resource> getStylesheets(Document document) throws IOException;
+    Iterable<Resource> getStylesheets(IDocument document) throws IOException;
 
-    Iterable<Resource> getScripts(Document document) throws IOException;
+    Iterable<Resource> getScripts(IDocument document) throws IOException;
 
-    Iterable<String> getImageSrcs(Document document);
+    Iterable<String> getImageSrcs(IDocument document);
 
     String getRootUrl();
 
-    String getOuterHtml();
+    IDocument getRootDocument();
 
-    Document getRootDocument();
-
-    Document getLinkDocument(Element link) throws IOException;
+    IDocument getLinkDocument(IElement link) throws IOException;
 
     String getFilePath(String url);
 }
