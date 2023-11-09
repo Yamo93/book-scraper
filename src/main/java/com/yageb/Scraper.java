@@ -35,7 +35,7 @@ public class Scraper implements IScraper {
             System.out.println("url " + url + " already exists");
             return null;
         }
-        IDocument document = parser.parse(url, false);
+        IDocument document = parser.parse(url);
         scrapedPages.add(url);
         return document;
     }
