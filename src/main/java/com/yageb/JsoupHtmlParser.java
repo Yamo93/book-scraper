@@ -9,9 +9,10 @@ public class JsoupHtmlParser implements IHtmlParser {
 
     @Override
     public JsoupDocument parse(String url, boolean recursive) throws IOException {
+        System.out.println("parsing document");
         Document document = Jsoup.connect(url).ignoreContentType(true).get();
         // add with data
-        return new JsoupDocument();
+        return new JsoupDocument(document);
     }
     
 }

@@ -1,28 +1,36 @@
 package com.yageb;
 
+import java.util.ArrayList;
+
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 public class JsoupDocument implements IDocument {
-    @Override
-    public Iterable<ILink> getLinks() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getLinks'");
+    private Document document;
+
+    public JsoupDocument(Document document) {
+        this.document = document;
     }
 
     @Override
     public String outerHtml() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'outerHtml'");
+        return document.outerHtml();
     }
 
     @Override
     public String title() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'title'");
+        return document.title();
     }
 
     @Override
     public Iterable<IElement> getElementsByTag(String tag) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getElementsByTag'");
+        Elements elements = document.getElementsByTag(tag);
+        ArrayList<IElement> jsoupElements = new ArrayList<IElement>();
+        for (Element element : elements) {
+            jsoupElements.add(new JsoupElement(element));
+        }
+        return jsoupElements;
     }
     
 }
