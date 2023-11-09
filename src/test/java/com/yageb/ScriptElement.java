@@ -1,5 +1,7 @@
 package com.yageb;
 
+import com.yageb.elements.IElement;
+
 /**
  * A script element.
  */

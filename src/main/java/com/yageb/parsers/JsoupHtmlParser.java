@@ -1,5 +1,6 @@
-package com.yageb;
+package com.yageb.parsers;
 
+import com.yageb.documents.JsoupDocument;
 import java.io.IOException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

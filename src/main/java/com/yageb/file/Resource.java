@@ -1,4 +1,4 @@
-package com.yageb;
+package com.yageb.file;
 
 /**
  * A scraped resource containing data and a file path.

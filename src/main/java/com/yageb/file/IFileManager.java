@@ -1,4 +1,4 @@
-package com.yageb;
+package com.yageb.file;
 
 import java.io.IOException;
 

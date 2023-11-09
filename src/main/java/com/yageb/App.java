@@ -1,5 +1,10 @@
 package com.yageb;
 
+import com.yageb.controllers.ScraperController;
+import com.yageb.file.FileManager;
+import com.yageb.parsers.IHtmlParser;
+import com.yageb.parsers.JsoupHtmlParser;
+import com.yageb.scrapers.Scraper;
 import java.io.IOException;
 
 /**

@@ -1,5 +1,7 @@
 package com.yageb;
 
+import com.yageb.documents.IDocument;
+import com.yageb.elements.IElement;
 import java.util.ArrayList;
 
 /**

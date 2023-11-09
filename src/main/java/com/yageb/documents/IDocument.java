@@ -1,4 +1,6 @@
-package com.yageb;
+package com.yageb.documents;
+
+import com.yageb.elements.IElement;
 
 /**
  * A document interface.

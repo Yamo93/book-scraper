@@ -1,4 +1,6 @@
-package com.yageb;
+package com.yageb.elements;
+
+import com.yageb.documents.IDocument;
 
 /**
  * A link interface.

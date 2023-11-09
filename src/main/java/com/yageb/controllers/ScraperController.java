@@ -1,5 +1,13 @@
-package com.yageb;
+package com.yageb.controllers;
 
+import com.yageb.documents.IDocument;
+import com.yageb.elements.IElement;
+import com.yageb.file.IFileManager;
+import com.yageb.file.Resource;
+import com.yageb.scrapers.IScraper;
+import com.yageb.scrapers.ImageScraper;
+import com.yageb.scrapers.ScriptScraper;
+import com.yageb.scrapers.StylesheetScraper;
 import java.io.IOException;
 
 /**

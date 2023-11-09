@@ -1,5 +1,6 @@
-package com.yageb;
+package com.yageb.parsers;
 
+import com.yageb.documents.IDocument;
 import java.io.IOException;
 
 /**

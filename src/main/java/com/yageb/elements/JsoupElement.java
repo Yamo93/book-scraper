@@ -1,4 +1,4 @@
-package com.yageb;
+package com.yageb.elements;
 
 import org.jsoup.nodes.Element;
 

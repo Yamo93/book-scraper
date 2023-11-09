@@ -1,5 +1,10 @@
 package com.yageb;
 
+import com.yageb.documents.IDocument;
+import com.yageb.elements.IElement;
+import com.yageb.file.Resource;
+import com.yageb.parsers.IHtmlParser;
+import com.yageb.scrapers.Scraper;
 import java.io.IOException;
 import org.junit.jupiter.api.Test;
 

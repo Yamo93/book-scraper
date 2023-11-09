@@ -1,5 +1,7 @@
-package com.yageb;
+package com.yageb.documents;
 
+import com.yageb.elements.IElement;
+import com.yageb.elements.JsoupElement;
 import java.util.ArrayList;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

@@ -1,5 +1,8 @@
-package com.yageb;
+package com.yageb.scrapers;
 
+import com.yageb.documents.IDocument;
+import com.yageb.file.IFileManager;
+import com.yageb.file.Resource;
 import java.io.IOException;
 
 /**

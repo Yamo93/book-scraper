@@ -1,4 +1,4 @@
-package com.yageb;
+package com.yageb.elements;
 
 /**
  * An element interface.

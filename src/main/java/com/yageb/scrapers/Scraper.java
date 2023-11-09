@@ -1,5 +1,9 @@
-package com.yageb;
+package com.yageb.scrapers;
 
+import com.yageb.documents.IDocument;
+import com.yageb.elements.IElement;
+import com.yageb.file.Resource;
+import com.yageb.parsers.IHtmlParser;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
