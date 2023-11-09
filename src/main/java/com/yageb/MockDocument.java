@@ -1,5 +1,8 @@
 package com.yageb;
 
+/**
+ * A mock implementation of Document.
+ */
 public class MockDocument implements IDocument {
     @Override
     public String outerHtml() {
@@ -15,5 +18,4 @@ public class MockDocument implements IDocument {
     public Iterable<IElement> getElementsByTag(String tag) {
         throw new UnsupportedOperationException("Unimplemented method 'getElementsByTag'");
     }
-    
 }

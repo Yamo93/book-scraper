@@ -1,11 +1,13 @@
 package com.yageb;
 
 import java.util.ArrayList;
-
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+/**
+ * A Jsoup document.
+ */
 public class JsoupDocument implements IDocument {
     private Document document;
 
@@ -32,5 +34,4 @@ public class JsoupDocument implements IDocument {
         }
         return jsoupElements;
     }
-    
 }

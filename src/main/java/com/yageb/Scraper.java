@@ -14,6 +14,11 @@ public class Scraper implements IScraper {
     private Set<String> scrapedPages;
     private IHtmlParser parser;
 
+    /**
+     * Constructs a scraper.
+     * @param parser An abstract parser.
+     * @throws IOException If parsing fails.
+     */
     public Scraper(IHtmlParser parser) throws IOException {
         this.parser = parser;
         this.scrapedPages = new HashSet<String>();
