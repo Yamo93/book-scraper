@@ -1,12 +1,14 @@
 package com.yageb;
 
+import java.util.ArrayList;
+
 /**
  * A mock implementation of Document.
  */
 public class MockDocument implements IDocument {
     @Override
     public String outerHtml() {
-        throw new UnsupportedOperationException("Unimplemented method 'outerHtml'");
+        return "<body>{ .color: red; }</body>";
     }
 
     @Override
@@ -16,6 +18,10 @@ public class MockDocument implements IDocument {
 
     @Override
     public Iterable<IElement> getElementsByTag(String tag) {
-        throw new UnsupportedOperationException("Unimplemented method 'getElementsByTag'");
+        ArrayList<IElement> elements = new ArrayList<IElement>();
+        if (tag == "link") {
+            elements.add(new StylesheetElement("http://books.toscrape.com/cats.css"));
+        }
+        return elements;
     }
 }

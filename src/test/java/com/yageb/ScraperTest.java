@@ -6,26 +6,46 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Tests the scraper.
  */
 public class ScraperTest {
     @Test
-    public void testRootUrl() throws IOException {
+    void testRootUrl() throws IOException {
         IHtmlParser parser = new MockParser();
         Scraper scraper = new Scraper(parser);
         String rootUrl = scraper.getRootUrl();
         assertEquals("http://books.toscrape.com/", rootUrl);
     }
 
-    @Test void testParseShouldReturnNullIfAlreadyParsed() throws IOException {
+    @Test
+    void testParseShouldReturnNullIfAlreadyParsed() throws IOException {
         IHtmlParser parser = new MockParser();
         Scraper scraper = new Scraper(parser);
         IDocument document1 = scraper.parse("http://books.toscrape.com/cats.html");
         assertNotNull(document1);
         IDocument document2 = scraper.parse("http://books.toscrape.com/cats.html");
         assertNull(document2);
+    }
+
+    @Test
+    void testGetStylesheets() throws IOException {
+        IHtmlParser parser = new MockParser();
+        Scraper scraper = new Scraper(parser);
+        IDocument stylesheetDocument = new MockDocument();
+        Iterable<Resource> stylesheets = scraper.getStylesheets(stylesheetDocument);
+        int count = 0;
+        String data = "";
+
+        for (Resource stylesheet : stylesheets) {
+            count += 1;
+            data += stylesheet.getData();
+        }
+        assertEquals(1, count);
+        assertTrue(data.contains("body"));
+        assertTrue(data.contains("red"));
     }
 
     @Test

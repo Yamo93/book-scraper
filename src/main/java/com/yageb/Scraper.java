@@ -29,7 +29,7 @@ public class Scraper implements IScraper {
         return baseUrl;
     }
 
-    public boolean isAlreadyScraped(String url) {
+    private boolean isAlreadyScraped(String url) {
         return scrapedPages.contains(url);
     }
 
